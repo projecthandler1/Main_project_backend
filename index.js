@@ -22,6 +22,24 @@ const userSchema = new mongoose.Schema({
 
 const User = new mongoose.model("User",userSchema)
 
+app.post("/Login",(req,res)=>{
+    const {email,password} = req.body
+    User.findOne({email:email},(err,user)=>{
+        if(user){
+            if(password === user.password){
+                res.send({message:"Login Successfull",user:user})
+                // alert("Login Successfull");
+            }else{
+                res.send({message:"Enter a Valid Password"});
+                // alert("OOps!! Enter The valid Pasword")
+            }
+        }else{
+            res.send({message:"User not Exist"})
+        }
+    });
+});
+
+
 
 
 app.post("/SignUp",(req,res)=>{
